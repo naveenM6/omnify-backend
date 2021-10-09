@@ -23,7 +23,7 @@ const initializeDbAndServer = async () => {
     });
 
     app.listen(process.env.PORT || 3004, () =>
-      console.log("Server Running at http://localhost:5004/")
+      console.log("Server Running at http://localhost:3004/")
     );
   } catch (error) {
     console.log(`DB Error: ${error.message}`);
@@ -103,3 +103,8 @@ app.post("/event/", async (request, response) => {
   const dbResponse = await db.run(createUserQuery);
   response.send("hi");
 });
+
+
+app.get("/data",async (request, response) => {
+  const query = 'select * from users';
+})
