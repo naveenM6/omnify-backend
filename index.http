@@ -1,0 +1,20 @@
+POST http://localhost:5004/users/
+Content-Type: application/json
+
+{
+    "uid": "1",
+    "first_name": "naveen",
+    "last_name": "malineni",
+    "email": "naveenmalieneni7@gmail.com",
+    "password": "Nani@6"
+}
+
+###
+
+POST http://localhost:5004/login
+Content-Type: application/json
+
+{
+    "email": "naveenmalieneni7@gmail.com",
+    "password": "Nani@7"
+}
