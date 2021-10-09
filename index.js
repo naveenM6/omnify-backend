@@ -103,3 +103,10 @@ app.post("/event/", async (request, response) => {
   const dbResponse = await db.run(createUserQuery);
   response.send("hi");
 });
+
+
+app.get("/data", async(request, response) => {
+  const query = "select * from users";
+  const dbres = await db.all(query);
+  response.send(dbres);
+})
