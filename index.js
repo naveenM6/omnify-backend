@@ -106,7 +106,7 @@ app.post("/event/", async (request, response) => {
 
 
 app.get("/data", async(request, response) => {
-  const query = "select * from users";
+  const query = "select * from events";
   const dbres = await db.all(query);
   response.send(dbres);
 })
