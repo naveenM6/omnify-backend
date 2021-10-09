@@ -5,6 +5,7 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
+const { Console } = require("console");
 
 const databasePath = path.join(__dirname, "omnify.db");
 
@@ -58,22 +59,21 @@ app.post("/users/", async (request, response) => {
     const jwtToken = jwt.sign(payload, "MY_SECRET_TOKEN");
     response.send({ jwtToken });
   } else {
+    response.status(400);
     response.send({ dataMsg: "User already exists" });
-    response.status = 400;
   }
 });
 
 app.post("/login", async (request, response) => {
   const { email, password } = request.body;
-  //console.log(email, password);
   const query = `SELECT * FROM users WHERE email = '${email}';`;
   const dbUser = await db.get(query);
   if (dbUser === undefined) {
-    res.status(400);
-    res.send("Invalid user");
+    response.status(400);
+    response.send({msg: "Invalid user"});
   } else {
-    const isPasswordMatched = await bcrypt.compare(password, dbUser.password);
-    if (isPasswordMatched === true) {
+    const isMatched = await bcrypt.compare(password, dbUser.password);
+    if (isMatched === true) {
       const payload = {
         email: email,
       };
@@ -81,7 +81,7 @@ app.post("/login", async (request, response) => {
       response.send({ jwtToken });
     } else {
       response.status(400);
-      response.send("Invalid Password");
+      response.send({ msg: "Check Credentials Again" });
     }
   }
 });
@@ -103,10 +103,3 @@ app.post("/event/", async (request, response) => {
   const dbResponse = await db.run(createUserQuery);
   response.send("hi");
 });
-
-
-app.get("/data",async (request, response) => {
-  const query = 'select * from users';
-  const dbResponse = await db.all(query);
-  response.send(dbResponse);
-})
