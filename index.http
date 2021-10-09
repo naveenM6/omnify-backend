@@ -18,3 +18,7 @@ Content-Type: application/json
     "email": "naveenmalieneni7@gmail.com",
     "password": "Nani@7"
 }
+
+###
+
+GET http://localhost:5004/data
