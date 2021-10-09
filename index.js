@@ -22,8 +22,8 @@ const initializeDbAndServer = async () => {
       driver: sqlite3.Database,
     });
 
-    app.listen(process.env.PORT || 3004, () =>
-      console.log("Server Running at http://localhost:3004/")
+    app.listen(5004, () =>
+      console.log("Server Running at http://localhost:5004/")
     );
   } catch (error) {
     console.log(`DB Error: ${error.message}`);
@@ -63,9 +63,9 @@ app.post("/users/", async (request, response) => {
   }
 });
 
-app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-  // console.log(email, password);
+app.post("/login", async (request, response) => {
+  const { email, password } = request.body;
+  //console.log(email, password);
   const query = `SELECT * FROM users WHERE email = '${email}';`;
   const dbUser = await db.get(query);
   if (dbUser === undefined) {
